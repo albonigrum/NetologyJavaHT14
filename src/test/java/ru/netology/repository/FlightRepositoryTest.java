@@ -9,12 +9,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FlightRepositoryTest {
     private FlightRepository repository = new FlightRepository();
-    private final Flight flight1 = new Flight(1, new CodeIATA("SAT"), new CodeIATA("BAT"), 30);
-    private final Flight flight2 = new Flight(2, new CodeIATA("SAT"), new CodeIATA("BAT"), 20);
-    private final Flight flight3 = new Flight(3, new CodeIATA("SAT"), new CodeIATA("BAT"), 10);
-    private final Flight flight4 = new Flight(4, new CodeIATA("BAT"), new CodeIATA("SAT"), 11);
-    private final Flight flight5 = new Flight(5, new CodeIATA("SAT"), new CodeIATA("SAT"), 0);
-    private final Flight flight6 = new Flight(6, new CodeIATA("BAT"), new CodeIATA("BAT"), 1);
+    private final Flight flight1 = new Flight(1, 60, new CodeIATA("SAT"), new CodeIATA("BAT"), 30);
+    private final Flight flight2 = new Flight(2, 50, new CodeIATA("SAT"), new CodeIATA("BAT"), 20);
+    private final Flight flight3 = new Flight(3, 40, new CodeIATA("SAT"), new CodeIATA("BAT"), 10);
+    private final Flight flight4 = new Flight(4, 30, new CodeIATA("BAT"), new CodeIATA("SAT"), 11);
+    private final Flight flight5 = new Flight(5, 20, new CodeIATA("SAT"), new CodeIATA("SAT"), 0);
+    private final Flight flight6 = new Flight(6, 10, new CodeIATA("BAT"), new CodeIATA("BAT"), 1);
 
 
     @BeforeEach
