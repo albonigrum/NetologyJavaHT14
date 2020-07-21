@@ -8,6 +8,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.netology.domain.CodeIATA;
 import ru.netology.domain.Flight;
+import ru.netology.domain.flight.comparators.FlightByFlightTimeAscComparator;
+import ru.netology.domain.flight.comparators.FlightByPriceDescComparator;
 import ru.netology.repository.FlightRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,12 +23,12 @@ class FlightManagerTest {
     @InjectMocks
     FlightManager manager;
 
-    private final Flight flight1 = new Flight(1, 60, new CodeIATA("SAT"), new CodeIATA("BAT"), 30);
+    private final Flight flight1 = new Flight(1, 60, new CodeIATA("SAT"), new CodeIATA("BAT"), 10);
     private final Flight flight2 = new Flight(2, 50, new CodeIATA("SAT"), new CodeIATA("BAT"), 20);
-    private final Flight flight3 = new Flight(3, 40, new CodeIATA("SAT"), new CodeIATA("BAT"), 10);
-    private final Flight flight4 = new Flight(4, 30, new CodeIATA("BAT"), new CodeIATA("SAT"), 11);
-    private final Flight flight5 = new Flight(5, 20, new CodeIATA("SAT"), new CodeIATA("SAT"), 0);
-    private final Flight flight6 = new Flight(6, 10, new CodeIATA("BAT"), new CodeIATA("BAT"), 1);
+    private final Flight flight3 = new Flight(3, 40, new CodeIATA("SAT"), new CodeIATA("BAT"), 30);
+    private final Flight flight4 = new Flight(4, 30, new CodeIATA("BAT"), new CodeIATA("SAT"), 40);
+    private final Flight flight5 = new Flight(5, 20, new CodeIATA("SAT"), new CodeIATA("SAT"), 50);
+    private final Flight flight6 = new Flight(6, 10, new CodeIATA("BAT"), new CodeIATA("BAT"), 60);
 
     @BeforeEach
     void setUp() {
@@ -76,7 +78,31 @@ class FlightManagerTest {
         Flight[] expected = {flight3, flight2, flight1};
 
         assertArrayEquals(expected, actual);
-
     }
 
+    @Test
+    void shouldFindAllByPriceDescComparatorIfMoreThenOneElemSatisfyTheRequest() {
+        Flight[] returned = {flight1, flight2, flight3, flight4, flight5, flight6};
+        doReturn(returned).when(repository).findAll();
+
+        FlightByPriceDescComparator comparator = new FlightByPriceDescComparator();
+
+        Flight[] actual = manager.findAll(new CodeIATA("SAT"), new CodeIATA("BAT"), comparator);
+        Flight[] expected = {flight1, flight2, flight3};
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldFindAllByFlightTimeAscComparatorIfMoreThenOneElemSatisfyTheRequest() {
+        Flight[] returned = {flight1, flight2, flight3, flight4, flight5, flight6};
+        doReturn(returned).when(repository).findAll();
+
+        FlightByFlightTimeAscComparator comparator = new FlightByFlightTimeAscComparator();
+
+        Flight[] actual = manager.findAll(new CodeIATA("SAT"), new CodeIATA("BAT"), comparator);
+        Flight[] expected = {flight1, flight2, flight3};
+
+        assertArrayEquals(expected, actual);
+    }
 }
